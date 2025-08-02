@@ -5,7 +5,8 @@ description: "A custom (frontend only) portfolio site made in HTML/CSS/JS"
 
 tags: ["HTML", "CSS", "JavaScript"]
 image: "/images/portfolio.png"
-carousel: ["/images/ns_image.png", "/images/maze.png", "/images/portfolio.png"]
+carousel:
+  ["/images/portfolio.png", "/images/portfolio2.png", "/images/portfolio3.png"]
 ---
 
 # Technology Stack

@@ -1,7 +1,9 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://mukundgupta.github.io/psychline-assignment/'
+canonifyURLs = true
 languageCode = 'en-us'
 title = 'Mukund - Interview Assignment'
 theme = "hugo-PaperMod"
+
 description = "A project showcase website"
 tags = ["design", "projects", "portfolio"]
 featured_image = "images/preview.png"

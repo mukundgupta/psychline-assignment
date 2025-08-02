@@ -3,7 +3,7 @@ title: "Maze Runner"
 
 description: "A maze solving game programmed in Python, with an algorithm that generates random mazes with difficulty levels along with player control and win states. This was made for my class 12 Computer Science final project."
 image: "/images/maze.png"
-carousel: ["/images/ns_image.png", "/images/maze.png", "/images/portfolio.png"]
+carousel: ["/images/maze.png", "/images/maze2.png"]
 tags: ["Python"]
 ---
 

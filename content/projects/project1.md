@@ -3,7 +3,7 @@ title: "NarayanSeva"
 
 description: "A frontend + backend project that won first position in the MU20 Hackathon Challenge. It is a platform to help reduce world hunger by providing a medium for excess food to be given to charities/NGOs."
 image: "/images/ns_image.png"
-carousel: ["/images/ns_image.png", "/images/maze.png", "/images/portfolio.png"]
+carousel: ["/images/ns_image.png", "/images/ns_image2.png"]
 
 tags: ["Python", "HTML", "CSS", "JavaScript", "Flask"]
 ---
