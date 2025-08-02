@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mukund - Interview Assignment</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
+
+      :root {
+        --bg-color: #dcdcdc;
+        --text-color: #000000;
+        --glow-color: #000000;
+        --trailer-color: #040404;
+      }
+
+      [data-theme="dark"] {
+        --bg-color: #000000;
+        --text-color: #ffffff;
+        --glow-color: #ffffff;
+        --trailer-color: #ffffff;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        background: var(--bg-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "League Spartan", sans-serif;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      .trailer {
+        position: fixed;
+        inset: 0;
+        width: 200px;
+        height: 200px;
+        background: var(--trailer-color);
+        border-radius: 50%;
+        opacity: 1;
+        z-index: -2;
+      }
+      .blur {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(200px);
+        z-index: -1;
+      }
+      .trailer,
+      #toggle-theme {
+        display: none;
+      }
+      .js-enabled .trailer,
+      .js-enabled #toggle-theme {
+        display: block;
+      }
+      main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        flex-direction: column;
+        z-index: 1;
+        position: relative;
+      }
+
+      .capsule-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 9999px;
+        position: fixed;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--bg-color);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        transition: all 0.3s ease;
+      }
+
+      .capsule-nav button {
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        padding: 0.6rem 1.2rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .capsule-nav button:hover {
+        background: var(--text-color);
+        color: var(--bg-color);
+      }
+
+      .capsule-nav span {
+        color: var(--text-color);
+        opacity: 0.5;
+      }
+
+      .menu-toggle {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: var(--text-color);
+        color: var(--bg-color);
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 101;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s, color 0.3s;
+      }
+
+       
+      #menu-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 99;
+      }
+
+      #menu-backdrop.show {
+        display: block;
+      }
+
+       
+      @media (max-width: 768px) {
+        .capsule-nav {
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background: var(--bg-color);
+          border-radius: 0px;
+          padding: 1rem 0;
+          z-index: 100;
+
+           
+          transform: translateY(100%);
+          opacity: 0;
+          pointer-events: none;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .capsule-nav.show {
+          transform: translateY(0);
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        .capsule-nav button {
+          width: 100%;
+          padding: 1rem;
+          border: none;
+          background: transparent;
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: var(--text-color);
+          transition: background 0.2s;
+          border-radius: 0;
+        }
+
+        .capsule-nav button:hover {
+          background: var(--text-color);
+          color: var(--bg-color);
+        }
+
+        .capsule-nav span {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+      }
+      h1 {
+        color: var(--text-color);
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background: transparent;
+        padding: 2rem;
+        border-radius: 1rem;
+        max-width: 400px;
+        width: 100%;
+        color: var(--text-color);
+      }
+
+      form label {
+        font-weight: 600;
+        color: var(--text-color);
+      }
+
+      form input,
+      form textarea {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--text-color);
+        background: transparent;
+        color: var(--text-color);
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        font-family: "League Spartan", sans-serif;
+        outline: none;
+        transition: border-color 0.3s ease, background 0.3s ease;
+      }
+
+      form input:focus,
+      form textarea:focus {
+        border-color: var(--glow-color);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      form textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      form button[type="submit"] {
+        background: var(--text-color);
+        color: var(--bg-color);
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 9999px;
+        cursor: pointer;
+        transition: background 0.3s, color 0.3s;
+        font-family: "League Spartan", sans-serif;
+      }
+
+      form button[type="submit"]:hover {
+        background: var(--bg-color);
+        color: var(--text-color);
+        border: 2px solid var(--text-color);
+      }
+
+      #form-status {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        min-height: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="trailer" id="trailer"></div>
+    <div class="blur"></div>
+
+    
+    <button class="menu-toggle" id="menu-toggle">☰</button>
+    
+    <div id="menu-backdrop"></div>
+    
+    <nav class="capsule-nav" id="capsule-nav">
+      <button onclick="window.location.href='/'">Home</button>
+      <span>|</span>
+      <button onclick="window.location.href='/projects/'">Projects</button>
+      <span>|</span>
+      <button onclick="window.location.href='/about/'">About</button>
+      <span>|</span>
+      <button onclick="window.location.href='/contact/'">Contact</button>
+      <span>|</span>
+
+      <button id="toggle-theme">Toggle Theme</button>
+    </nav>
+
+    
+    <main>
+      <br />
+      <h1>Contact</h1>
+      <form id="contactForm" novalidate>
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          aria-required="true"
+        />
+
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          aria-required="true"
+        />
+
+        <label for="message">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          aria-required="true"
+        ></textarea>
+
+        <button type="submit">Send Message</button>
+        <p id="form-status" role="alert" aria-live="polite"></p>
+      </form>
+    </main>
+
+    <script>
+      document.documentElement.classList.add("js-enabled");
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("contactForm");
+        const status = document.getElementById("form-status");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = form.name.value.trim();
+          const email = form.email.value.trim();
+          const message = form.message.value.trim();
+
+          if (!name || !email || !message) {
+            status.textContent = "All fields are required.";
+            return;
+          }
+
+          const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+          if (!emailRegex.test(email)) {
+            status.textContent = "Please enter a valid email address.";
+            return;
+          }
+
+          status.textContent = "Form Submitted!";
+          
+        });
+      });
+      const savedTheme = localStorage.getItem("theme");
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const theme = savedTheme || (systemPrefersDark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+
+      document.getElementById("toggle-theme").addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        const next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+      });
+
+      const trailer = document.getElementById("trailer");
+      window.onmousemove = (e) => {
+        const x = e.clientX - trailer.offsetWidth / 2;
+        const y = e.clientY - trailer.offsetHeight / 2;
+        trailer.animate(
+          { left: `${x}px`, top: `${y}px` },
+          { duration: 10000, fill: "forwards" }
+        );
+      };
+
+      const menuToggle = document.getElementById("menu-toggle");
+      const capsuleNav = document.getElementById("capsule-nav");
+      const menuBackdrop = document.getElementById("menu-backdrop");
+
+      menuToggle.addEventListener("click", () => {
+        capsuleNav.classList.toggle("show");
+        menuBackdrop.classList.toggle("show");
+      });
+
+      menuBackdrop.addEventListener("click", () => {
+        capsuleNav.classList.remove("show");
+        menuBackdrop.classList.remove("show");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --glow-color: #ffcc00;
+}
+
+[data-theme="dark"] {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --glow-color: #ffd700;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+.glow-text {
+  font-size: 3.5rem;
+  color: var(--glow-color);
+  text-align: center;
+  text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color),
+    0 0 20px var(--glow-color), 0 0 40px var(--glow-color);
+  transition: text-shadow 0.3s;
+}
+
+#toggle-theme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--text-color);
+  color: var(--bg-color);
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s, color 0.3s;
+}

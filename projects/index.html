@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mukund - Interview Assignment</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
+
+      :root {
+        --bg-color: #dcdcdc;
+        --text-color: #000000;
+        --glow-color: #000000;
+        --trailer-color: #040404;
+      }
+
+      [data-theme="dark"] {
+        --bg-color: #000000;
+        --text-color: #ffffff;
+        --glow-color: #ffffff;
+        --trailer-color: #ffffff;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg-color);
+        font-family: "League Spartan", sans-serif;
+        transition: background 0.3s, color 0.3s;
+        color: var(--text-color);
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 2rem 1rem;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .carousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1.5rem;
+        padding: 1rem;
+        max-width: 90vw;
+      }
+
+      .carousel::-webkit-scrollbar {
+        display: none;
+      }
+
+      .carousel-item {
+        flex: 0 0 auto;
+        scroll-snap-align: center;
+        background: var(--text-color);
+        color: var(--bg-color);
+        border-radius: 1rem;
+        padding: 1rem;
+        width: 300px;
+        transition: transform 0.3s ease;
+      }
+
+      .carousel-item:hover {
+        transform: scale(1.05);
+      }
+
+      .carousel-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        max-width: 100%;
+      }
+
+      .trailer {
+        position: fixed;
+        inset: 0;
+        width: 200px;
+        height: 200px;
+        background: var(--trailer-color);
+        border-radius: 50%;
+        opacity: 1;
+        z-index: -2;
+      }
+      .blur {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(200px);
+        z-index: -1;
+      }
+      .trailer,
+      #toggle-theme {
+        display: none;
+      }
+      .js-enabled .trailer,
+      .js-enabled #toggle-theme {
+        display: block;
+      }
+
+      .capsule-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 9999px;
+        position: fixed;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--bg-color);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        transition: all 0.3s ease;
+      }
+
+      .capsule-nav button {
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        padding: 0.6rem 1.2rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .capsule-nav button:hover {
+        background: var(--text-color);
+        color: var(--bg-color);
+      }
+
+      .capsule-nav span {
+        color: var(--text-color);
+        opacity: 0.5;
+      }
+
+      .menu-toggle {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: var(--text-color);
+        color: var(--bg-color);
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 101;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s, color 0.3s;
+      }
+
+      #menu-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 99;
+      }
+
+      #menu-backdrop.show {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .capsule-nav {
+          flex-direction: column;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          border-radius: 0px;
+          padding: 1rem 0;
+          transform: translateY(100%);
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .capsule-nav.show {
+          transform: translateY(0);
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        .capsule-nav button {
+          width: 100%;
+          padding: 1rem;
+          font-size: 1.2rem;
+          border-radius: 0;
+        }
+
+        .capsule-nav span {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+      }
+      .carousel-item-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="trailer" id="trailer"></div>
+    <div class="blur"></div>
+
+    <button class="menu-toggle" id="menu-toggle">☰</button>
+    <div id="menu-backdrop"></div>
+    <nav class="capsule-nav" id="capsule-nav">
+      <button onclick="window.location.href='/'">Home</button>
+      <span>|</span>
+      <button onclick="window.location.href='/projects/'">Projects</button>
+      <span>|</span>
+      <button onclick="window.location.href='/about/'">About</button>
+      <span>|</span>
+      <button onclick="window.location.href='/contact/'">Contact</button>
+      <span>|</span>
+
+      <button id="toggle-theme">Toggle Theme</button>
+    </nav>
+
+    <main>
+      <h1>Projects</h1>
+      <div class="carousel">
+        
+        <a href="/projects/project3/" class="carousel-item-link">
+          <div class="carousel-item">
+            
+            <img src="/images/maze.png" alt="Projects" />
+            
+            <h2>Maze Runner</h2>
+            <p>A maze solving game programmed in Python, with an algorithm that generates random mazes with difficulty levels along with player control and win states. This was made for my class 12 Computer Science final project.</p>
+          </div>
+        </a>
+        
+        <a href="/projects/project1/" class="carousel-item-link">
+          <div class="carousel-item">
+            
+            <img src="/images/ns_image.png" alt="Projects" />
+            
+            <h2>NarayanSeva</h2>
+            <p>A frontend &#43; backend project that won first position in the MU20 Hackathon Challenge. It is a platform to help reduce world hunger by providing a medium for excess food to be given to charities/NGOs.</p>
+          </div>
+        </a>
+        
+        <a href="/projects/project2/" class="carousel-item-link">
+          <div class="carousel-item">
+            
+            <img src="/images/portfolio.png" alt="Projects" />
+            
+            <h2>Personal Portfolio Site</h2>
+            <p>A custom (frontend only) portfolio site made in HTML/CSS/JS</p>
+          </div>
+        </a>
+        
+      </div>
+    </main>
+
+    <script>
+      document.documentElement.classList.add("js-enabled");
+      const savedTheme = localStorage.getItem("theme");
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const theme = savedTheme || (systemPrefersDark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+
+      document.getElementById("toggle-theme").addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        const next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+      });
+
+      const trailer = document.getElementById("trailer");
+      window.onmousemove = (e) => {
+        const x = e.clientX - trailer.offsetWidth / 2;
+        const y = e.clientY - trailer.offsetHeight / 2;
+        trailer.animate(
+          { left: `${x}px`, top: `${y}px` },
+          { duration: 10000, fill: "forwards" }
+        );
+      };
+
+      const menuToggle = document.getElementById("menu-toggle");
+      const capsuleNav = document.getElementById("capsule-nav");
+      const menuBackdrop = document.getElementById("menu-backdrop");
+
+      menuToggle.addEventListener("click", () => {
+        capsuleNav.classList.toggle("show");
+        menuBackdrop.classList.toggle("show");
+      });
+
+      menuBackdrop.addEventListener("click", () => {
+        capsuleNav.classList.remove("show");
+        menuBackdrop.classList.remove("show");
+      });
+    </script>
+  </body>
+</html>

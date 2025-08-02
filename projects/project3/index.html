@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mukund - Interview Assignment</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
+
+      :root {
+        --bg-color: #dcdcdc;
+        --text-color: #000000;
+        --glow-color: #000000;
+        --trailer-color: #040404;
+      }
+
+      [data-theme="dark"] {
+        --bg-color: #000000;
+        --text-color: #ffffff;
+        --glow-color: #ffffff;
+        --trailer-color: #ffffff;
+      }
+
+      body {
+        scroll-behavior: smooth;
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "League Spartan", sans-serif;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      .glow-text {
+        font-size: 4rem;
+        font-weight: 700;
+        color: var(--glow-color);
+        text-align: center;
+        text-shadow: 0 0 4px var(--glow-color), 0 0 8px var(--glow-color),
+          0 0 16px var(--glow-color), 0 0 32px rgba(255, 191, 0, 0.3),
+          0 0 64px rgba(255, 191, 0, 0.2);
+        animation: pulse 2s ease-in-out infinite;
+      }
+      p {
+        color: var(--glow-color);
+        text-align: center;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          text-shadow: 0 0 4px var(--glow-color), 0 0 8px var(--glow-color),
+            0 0 16px var(--glow-color), 0 0 32px rgba(255, 191, 0, 0.3),
+            0 0 64px rgba(255, 191, 0, 0.2);
+        }
+        50% {
+          text-shadow: 0 0 1px var(--glow-color), 0 0 4px var(--glow-color),
+            0 0 8px var(--glow-color), 0 0 16px rgba(255, 191, 0, 0.2),
+            0 0 32px rgba(255, 191, 0, 0.1);
+        }
+      }
+
+      .trailer {
+        position: fixed;
+        inset: 0;
+        width: 200px;
+        height: 200px;
+        background: var(--trailer-color);
+        border-radius: 50%;
+        opacity: 1;
+        z-index: -2;
+      }
+      .blur {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(200px);
+        z-index: -1;
+      }
+      .trailer,
+      #toggle-theme {
+        display: none;
+      }
+      .js-enabled .trailer,
+      .js-enabled #toggle-theme {
+        display: block;
+      }
+      main {
+        display: flex;
+        align-items: center;
+        
+        height: 100vh;
+        flex-direction: column;
+        z-index: 1;
+        position: relative;
+      }
+
+      .capsule-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 9999px;
+        position: fixed;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--bg-color);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        transition: all 0.3s ease;
+      }
+
+      .capsule-nav button {
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        padding: 0.6rem 1.2rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .capsule-nav button:hover {
+        background: var(--text-color);
+        color: var(--bg-color);
+      }
+
+      .capsule-nav span {
+        color: var(--text-color);
+        opacity: 0.5;
+      }
+
+      .menu-toggle {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: var(--text-color);
+        color: var(--bg-color);
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 101;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s, color 0.3s;
+      }
+
+      
+      #menu-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 99;
+      }
+
+      #menu-backdrop.show {
+        display: block;
+      }
+
+      
+      @media (max-width: 768px) {
+        .capsule-nav {
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background: var(--bg-color);
+          border-radius: 0px;
+          padding: 1rem 0;
+          z-index: 100;
+
+           
+          transform: translateY(100%);
+          opacity: 0;
+          pointer-events: none;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .capsule-nav.show {
+          transform: translateY(0);
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        .capsule-nav button {
+          width: 100%;
+          padding: 1rem;
+          border: none;
+          background: transparent;
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: var(--text-color);
+          transition: background 0.2s;
+          border-radius: 0;
+        }
+
+        .capsule-nav button:hover {
+          background: var(--text-color);
+          color: var(--bg-color);
+        }
+
+        .capsule-nav span {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+      }
+      .blog-post {
+  max-width: 720px;
+  padding: 2rem;
+  padding-top: 5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  text-align: left;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.post-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--glow-color);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 8px var(--glow-color);
+}
+
+.post-image {
+  display: block;
+  margin: 0 auto 2rem auto;
+  max-width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+.content {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--text-color);
+  text-align: left;
+}
+
+.content p {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.content h2, .content h3 {
+  margin-top: 2rem;
+  color: var(--glow-color);
+  text-shadow: 0 0 4px var(--glow-color);
+}
+.tags {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+ .carousel {
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        scroll-snap-type: x mandatory;
+        padding: 1rem 0;
+      }
+      .carousel::-webkit-scrollbar {
+        display: none;
+      }
+      .carousel img {
+        max-height: 300px;
+        border-radius: 0.5rem;
+        scroll-snap-align: center;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+      .carousel img:hover {
+        transform: scale(1.05);
+      }
+       
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+#lightbox.active {
+  display: flex;
+}
+
+#lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  pointer-events: auto;
+}
+
+
+
+ 
+#carousel {
+  animation: scroll-carousel 30s linear infinite;
+}
+#carousel:hover {
+  animation-play-state: paused;
+}
+@keyframes scroll-carousel {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+    </style>
+  </head>
+  &lt;>
+    
+    <div class="trailer" id="trailer"></div>
+    <div class="blur"></div>
+
+    
+    <button class="menu-toggle" id="menu-toggle">☰</button>
+    
+    <div id="menu-backdrop"></div>
+    
+    <nav class="capsule-nav" id="capsule-nav">
+      <button onclick="window.location.href='/'">Home</button>
+      <span>|</span>
+      <button onclick="window.location.href='/projects/'">Projects</button>
+      <span>|</span>
+      <button onclick="window.location.href='/about/'">About</button>
+      <span>|</span>
+      <button onclick="window.location.href='/contact/'">Contact</button>
+      <span>|</span>
+
+      <button id="toggle-theme">Toggle Theme</button>
+    </nav>
+
+    
+    
+    <main>
+  <article class="blog-post">
+    <h1 class="post-title">Maze Runner</h1>
+   
+  <div class="tags">
+    
+      <a href="/tags/python/" class="tag">Python</a>
+    
+  </div>
+
+<br>
+    
+    <img class="post-image" src="/images/maze.png" alt="Maze Runner" />
+    
+    <div class="content"><h1 id="technology-stack">Technology Stack</h1>
+<p>The game was coded in Python using the PyGame library. It also has a retro CRT effect using shaders (OpenGL).</p>
+<h1 id="about-project">About Project</h1>
+<p>This project was submitted as my 12th Computer Science final project. It includes a difficulty slider with easy, medium, hard, ultra hard, and near impossible(blind maze). In the blind maze, the maze is invisible ad the player has to navigate using trial and error to find the end. The game generates a matrix of 0s and 1s, with 1s being the walls and 0s being the path. It ensures that each maze is unique and solvable using a process called Recursive Backtracing. The maze is then rendered on the screen using the pygame library. There are several shaders and effects applied over the maze to give it a more retro feel.</p>
+</div>
+    
+  <div class="carousel" id="carousel">
+    
+      <img src="/images/ns_image.png" alt="Carousel image" onclick="openLightbox(this.src)">
+    
+      <img src="/images/maze.png" alt="Carousel image" onclick="openLightbox(this.src)">
+    
+      <img src="/images/portfolio.png" alt="Carousel image" onclick="openLightbox(this.src)">
+    
+  </div>
+
+
+
+
+
+  </article>
+  
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="Enlarged image">
+</div>
+</main>
+
+  
+
+    &lt;
+    <script>
+      document.documentElement.classList.add("js-enabled");
+      const savedTheme = localStorage.getItem("theme");
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const theme = savedTheme || (systemPrefersDark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+
+      document.getElementById("toggle-theme").addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        const next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+      });
+
+      const trailer = document.getElementById("trailer");
+      window.onmousemove = (e) => {
+        const x = e.clientX - trailer.offsetWidth / 2;
+        const y = e.clientY - trailer.offsetHeight / 2;
+        trailer.animate(
+          { left: `${x}px`, top: `${y}px` },
+          { duration: 10000, fill: "forwards" }
+        );
+      };
+
+      const menuToggle = document.getElementById("menu-toggle");
+      const capsuleNav = document.getElementById("capsule-nav");
+      const menuBackdrop = document.getElementById("menu-backdrop");
+
+      menuToggle.addEventListener("click", () => {
+        capsuleNav.classList.toggle("show");
+        menuBackdrop.classList.toggle("show");
+      });
+
+      menuBackdrop.addEventListener("click", () => {
+        capsuleNav.classList.remove("show");
+        menuBackdrop.classList.remove("show");
+      });
+         const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add("active");
+  }
+
+  
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove("active");
+    }
+  });
+    </script>
+  </body>
+</html>
