@@ -1,0 +1,7 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Mukund - Interview Assignment'
+theme = "hugo-PaperMod"
+description = "A project showcase website"
+tags = ["design", "projects", "portfolio"]
+featured_image = "images/preview.png"
