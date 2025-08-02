@@ -2,44 +2,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Mukund - Interview Assignment</title>
-    <link>https://example.org/tags/</link>
+    <link>https://mukundgupta.github.io/psychline-assignment/tags/</link>
     <description>Recent content in Tags on Mukund - Interview Assignment</description>
     <generator>Hugo -- 0.148.1</generator>
     <language>en-us</language>
-    <atom:link href="https://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mukundgupta.github.io/psychline-assignment/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CSS</title>
-      <link>https://example.org/tags/css/</link>
+      <link>https://mukundgupta.github.io/psychline-assignment/tags/css/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/tags/css/</guid>
+      <guid>https://mukundgupta.github.io/psychline-assignment/tags/css/</guid>
       <description></description>
     </item>
     <item>
       <title>Flask</title>
-      <link>https://example.org/tags/flask/</link>
+      <link>https://mukundgupta.github.io/psychline-assignment/tags/flask/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/tags/flask/</guid>
+      <guid>https://mukundgupta.github.io/psychline-assignment/tags/flask/</guid>
       <description></description>
     </item>
     <item>
       <title>HTML</title>
-      <link>https://example.org/tags/html/</link>
+      <link>https://mukundgupta.github.io/psychline-assignment/tags/html/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/tags/html/</guid>
+      <guid>https://mukundgupta.github.io/psychline-assignment/tags/html/</guid>
       <description></description>
     </item>
     <item>
       <title>JavaScript</title>
-      <link>https://example.org/tags/javascript/</link>
+      <link>https://mukundgupta.github.io/psychline-assignment/tags/javascript/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/tags/javascript/</guid>
+      <guid>https://mukundgupta.github.io/psychline-assignment/tags/javascript/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
-      <link>https://example.org/tags/python/</link>
+      <link>https://mukundgupta.github.io/psychline-assignment/tags/python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/tags/python/</guid>
+      <guid>https://mukundgupta.github.io/psychline-assignment/tags/python/</guid>
       <description></description>
     </item>
   </channel>
